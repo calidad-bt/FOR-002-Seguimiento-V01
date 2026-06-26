@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Sugerencias – Biotrom</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent:   #0E6B8A;
+  --accent-d: #094E66;
+  --accent-l: #E4F2F7;
+  --bg:       #ECEEF0;
+  --surface:  #FFFFFF;
+  --border:   #D0D4D9;
+  --border-d: #B0B6BC;
+  --text:     #1C2226;
+  --text-2:   #5A6470;
+  --text-3:   #8A949E;
+  --ok-bg:    #EAF5EC; --ok-text:   #1E6B2E; --ok-bd:   #A8D5AE;
+  --warn-bg:  #FEF9EC; --warn-text: #8A5C00; --warn-bd: #ECD98A;
+  --err-bg:   #FDEDED; --err-text:  #B72020; --err-bd:  #F5AAAA;
+  --radius:   4px;
+  --font:     'IBM Plex Sans', sans-serif;
+  --mono:     'IBM Plex Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+  padding: 24px 16px 48px;
+}
+.layout {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── CARD ─────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.card:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+.card:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
+.card + .card     { border-top: none; }
+.card-body        { padding: 14px 16px 20px; }
+
+/* ── DOC HEADER ──────────────────────────────────────────── */
+.doc-header {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  border-bottom: 1px solid var(--border);
+  min-height: 64px;
+}
+.doc-logo {
+  background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  border-right: 1px solid var(--border);
+  font-family: var(--mono); font-size: 18px; font-weight: 600;
+  color: #fff; letter-spacing: .08em; flex-shrink: 0;
+}
+.doc-title-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 10px 16px;
+  border-right: 1px solid var(--border);
+}
+.doc-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text); }
+.doc-subtitle { font-size: 11px; color: var(--text-2); margin-top: 3px; }
+.doc-meta { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+.meta-cell { padding: 6px 12px; min-width: 110px; border-left: 1px solid var(--border); }
+.meta-cell:nth-child(1), .meta-cell:nth-child(2) { border-bottom: 1px solid var(--border); }
+.meta-label { display: block; font-size: 9px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); margin-bottom: 2px; }
+.meta-value { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--text); }
+
+/* ── SEC TITLE ───────────────────────────────────────────── */
+.sec-title {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); padding-bottom: 6px; margin-bottom: 12px;
+  border-bottom: 1.5px solid var(--accent-l);
+  display: flex; align-items: center; gap: 6px;
+}
+.sec-title::before {
+  content: ''; display: block; width: 3px; height: 12px;
+  background: var(--accent); border-radius: 2px; flex-shrink: 0;
+}
+
+/* ── FORM FIELDS ─────────────────────────────────────────── */
+.field-label {
+  display: block; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text-2); margin-bottom: 4px;
+}
+.req { color: var(--accent); font-weight: 700; }
+.field-input {
+  width: 100%; font-family: var(--font); font-size: 13px; color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 7px 10px; background: var(--surface); outline: none;
+  transition: border-color .15s;
+}
+.field-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(14,107,138,.08); }
+.field-input::placeholder { color: var(--text-3); }
+.field-select {
+  width: 100%; font-family: var(--font); font-size: 13px; color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 7px 28px 7px 10px; background: var(--surface); outline: none;
+  cursor: pointer; appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M0 0l4.5 6L9 0z' fill='%235A6470'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  transition: border-color .15s;
+}
+.field-select:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(14,107,138,.08); }
+.field-textarea {
+  width: 100%; font-family: var(--font); font-size: 13px; color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 7px 10px; background: var(--surface); outline: none;
+  resize: vertical; min-height: 80px; line-height: 1.5;
+  transition: border-color .15s;
+}
+.field-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(14,107,138,.08); }
+.field-textarea::placeholder { color: var(--text-3); }
+
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.field-grid.cols-1 { grid-template-columns: 1fr; }
+.field-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.field-wrap { margin-bottom: 14px; }
+
+/* ── ORIGEN OPTIONS ──────────────────────────────────────── */
+.origen-options {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;
+}
+.origen-opt { display: none; }
+.origen-opt + label {
+  display: inline-flex; align-items: center;
+  padding: 5px 14px; border-radius: 10px;
+  border: 1.5px solid var(--border);
+  font-size: 12px; font-weight: 600;
+  color: var(--text-2); cursor: pointer;
+  transition: all .15s;
+}
+.origen-opt + label:hover { border-color: var(--accent); color: var(--accent); }
+.origen-opt:checked + label { background: var(--accent-l); border-color: var(--accent); color: var(--accent-d); font-weight: 700; }
+
+/* ── DIVIDER ─────────────────────────────────────────────── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+/* ── SUBMIT ──────────────────────────────────────────────── */
+.submit-area {
+  display: flex; justify-content: flex-end;
+  align-items: center; gap: 12px; padding-top: 4px;
+}
+.btn-primary {
+  height: 38px; padding: 0 20px;
+  font-family: var(--font); font-size: 13px; font-weight: 700;
+  background: var(--accent); color: #fff;
+  border: 1px solid var(--accent); border-radius: var(--radius);
+  cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+  transition: filter .1s;
+}
+.btn-primary:hover { filter: brightness(.93); }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; filter: none; }
+.btn-light {
+  height: 34px; padding: 0 14px;
+  font-family: var(--font); font-size: 12px; font-weight: 600;
+  background: var(--surface); color: var(--text-2); border: 1px solid var(--border);
+  border-radius: var(--radius); cursor: pointer; margin-top: 8px; transition: filter .1s;
+}
+.btn-light:hover { filter: brightness(.95); }
+
+#statusMsg {
+  font-family: var(--mono); font-size: 11px;
+  padding: 6px 12px; border-radius: var(--radius); display: none;
+}
+#statusMsg.ok   { background: var(--ok-bg);   color: var(--ok-text);  border: 1px solid var(--ok-bd);  display: block; }
+#statusMsg.err  { background: var(--err-bg);  color: var(--err-text); border: 1px solid var(--err-bd); display: block; }
+#statusMsg.info { background: var(--accent-l);color: var(--accent-d); border: 1px solid #B0D8E8;       display: block; }
+
+.req-note { font-size: 11px; color: var(--text-3); margin-bottom: 14px; }
+.req-note span { color: var(--accent); font-weight: 700; }
+
+/* ── SUCCESS ─────────────────────────────────────────────── */
+.success-screen {
+  display: none; flex-direction: column;
+  align-items: center; text-align: center;
+  padding: 52px 24px 56px; gap: 10px;
+}
+.success-screen.visible { display: flex; }
+.success-check {
+  width: 52px; height: 52px;
+  background: var(--ok-bg); border: 1.5px solid var(--ok-bd);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: var(--ok-text); font-weight: 700;
+  margin-bottom: 4px;
+}
+.success-id { font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--accent); letter-spacing: .05em; }
+.success-label { font-size: 13px; font-weight: 600; color: var(--text); }
+.success-sub { font-size: 12px; color: var(--text-2); max-width: 340px; line-height: 1.6; margin-top: 2px; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+  body { padding: 12px 10px 40px; }
+  .doc-header { grid-template-columns: 56px 1fr; }
+  .doc-meta { display: none; }
+  .doc-title-wrap { border-right: none; }
+  .field-grid { grid-template-columns: 1fr; }
+  .submit-area { flex-direction: column; align-items: stretch; }
+  .btn-primary { justify-content: center; }
+}
+
+@media print {
+  @page { size: A4; margin: 20mm 18mm; }
+  body { background: white; padding: 0; }
+  .layout { max-width: 100%; }
+  .card { box-shadow: none; }
+  #submitArea { display: none; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <div class="card">
+
+    <!-- HEADER DOCUMENTAL -->
+    <div class="doc-header">
+      <div class="doc-logo">BT</div>
+      <div class="doc-title-wrap">
+        <div class="doc-title">Formulario de Sugerencias de Mejora</div>
+        <div class="doc-subtitle">Sistema de Gestión de Calidad — Biotrom</div>
+      </div>
+      <div class="doc-meta">
+        <div class="meta-cell">
+          <span class="meta-label">Aprobación</span>
+          <span class="meta-value">__/__/____</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-label">Entrada en vigor</span>
+          <span class="meta-value">__/__/____</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-label">Código</span>
+          <span class="meta-value">FOR-002</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-label">Versión</span>
+          <span class="meta-value">01</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMULARIO -->
+    <div class="card-body" id="formContent">
+      <p class="req-note">Los campos marcados con <span>*</span> son obligatorios.</p>
+
+      <!-- 1. DATOS DEL SUGERENTE -->
+      <div class="sec-title">1. Datos de quien sugiere</div>
+
+      <div class="field-grid">
+        <div>
+          <label class="field-label">Apellido y nombre <span class="req">*</span></label>
+          <input class="field-input" type="text" id="f_sugerente" placeholder="Apellido y nombre" required>
+        </div>
+        <div>
+          <label class="field-label">Email de contacto</label>
+          <input class="field-input" type="email" id="f_email" placeholder="correo@ejemplo.com">
+        </div>
+      </div>
+
+      <div class="field-grid">
+        <div>
+          <label class="field-label">Área / Institución</label>
+          <input class="field-input" type="text" id="f_area" placeholder="Sector o institución">
+        </div>
+        <div>
+          <label class="field-label">Fecha</label>
+          <input class="field-input" type="date" id="f_fecha">
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- 2. ORIGEN DE LA SUGERENCIA -->
+      <div class="sec-title">2. Origen de la sugerencia</div>
+
+      <div class="field-wrap">
+        <label class="field-label">¿Desde dónde viene esta sugerencia? <span class="req">*</span></label>
+        <div class="origen-options" id="origenOptions">
+          <input class="origen-opt" type="radio" name="origen" id="origen-cirugia"  value="Cirugía"   onchange="onOrigenChange()">
+          <label for="origen-cirugia">Cirugía</label>
+          <input class="origen-opt" type="radio" name="origen" id="origen-ventas"   value="Ventas"    onchange="onOrigenChange()">
+          <label for="origen-ventas">Ventas</label>
+          <input class="origen-opt" type="radio" name="origen" id="origen-deposito" value="Depósito"  onchange="onOrigenChange()">
+          <label for="origen-deposito">Depósito</label>
+          <input class="origen-opt" type="radio" name="origen" id="origen-calidad"  value="Calidad"   onchange="onOrigenChange()">
+          <label for="origen-calidad">Calidad</label>
+          <input class="origen-opt" type="radio" name="origen" id="origen-otro"     value="Otro"      onchange="onOrigenChange()">
+          <label for="origen-otro">Otro</label>
+        </div>
+        <input class="field-input" type="text" id="f_origenOtro"
+          placeholder="Especificá el origen…"
+          style="display:none; margin-top:8px; max-width:320px;">
+      </div>
+
+      <hr class="divider">
+
+      <!-- 3. LA SUGERENCIA -->
+      <div class="sec-title">3. Sugerencia de mejora</div>
+
+      <div class="field-wrap">
+        <label class="field-label">Descripción de la sugerencia <span class="req">*</span></label>
+        <textarea class="field-textarea auto-grow" id="f_sugerencia" rows="4"
+          placeholder="Describí tu sugerencia de mejora con el mayor detalle posible. ¿Qué mejoraría? ¿Por qué lo considerás importante? ¿Cómo lo implementarías?" required></textarea>
+      </div>
+
+      <div class="field-wrap">
+        <label class="field-label">Proceso / área que se vería beneficiado</label>
+        <input class="field-input" type="text" id="f_proceso" placeholder="Ej: esterilización, logística, armado de cajas…">
+      </div>
+
+      <!-- SUBMIT -->
+      <hr class="divider">
+      <div class="submit-area" id="submitArea">
+        <span id="statusMsg"></span>
+        <button class="btn-primary" id="btnEnviar" onclick="enviarSugerencia()">Enviar sugerencia</button>
+      </div>
+    </div><!-- /formContent -->
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-check">✓</div>
+      <div class="success-id" id="successId">SM-0001</div>
+      <div class="success-label">Sugerencia registrada correctamente</div>
+      <p class="success-sub">Guardá este número de referencia. El equipo de Calidad revisará tu sugerencia y te informará el resultado.</p>
+      <button class="btn-light" onclick="nuevaSugerencia()">Ingresar otra sugerencia</button>
+    </div>
+
+  </div><!-- /card -->
+</div><!-- /layout -->
+
+<script>
+const FB_URL  = "https://sgc-bt-default-rtdb.firebaseio.com";
+const FB_PATH = "/sugerencias";
+
+function lsGet(k){ try{ return JSON.parse(localStorage.getItem(k)||"null"); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+function setStatus(msg, tipo) {
+  const el = document.getElementById("statusMsg");
+  el.textContent = msg;
+  el.className = tipo;
+}
+
+function getRadio(name) {
+  const s = document.querySelector(`input[name="${name}"]:checked`);
+  return s ? s.value : "";
+}
+
+async function generarId() {
+  try {
+    const res  = await fetch(FB_URL + "/sugerencias_counter.json");
+    const val  = await res.json();
+    const next = (val || 0) + 1;
+    await fetch(FB_URL + "/sugerencias_counter.json", {
+      method: "PUT",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(next)
+    });
+    return "SM-" + String(next).padStart(4, "0");
+  } catch(e) {
+    return "SM-" + Date.now().toString().slice(-6);
+  }
+}
+
+function onOrigenChange() {
+  const val = getRadio("origen");
+  const inp = document.getElementById("f_origenOtro");
+  inp.style.display = val === "Otro" ? "" : "none";
+  if (val !== "Otro") inp.value = "";
+}
+
+function getOrigenFinal() {
+  const val = getRadio("origen");
+  if (val === "Otro") {
+    const txt = document.getElementById("f_origenOtro").value.trim();
+    return txt ? "Otro: " + txt : "Otro";
+  }
+  return val;
+}
+
+async function enviarSugerencia() {
+  const btn = document.getElementById("btnEnviar");
+
+  const sugerente  = document.getElementById("f_sugerente").value.trim();
+  const sugerencia = document.getElementById("f_sugerencia").value.trim();
+  const origen     = getOrigenFinal();
+  const origenRaw  = getRadio("origen");
+
+  if (!sugerente || !sugerencia || !origenRaw) {
+    setStatus("Completá todos los campos obligatorios (*) antes de enviar.", "err");
+    return;
+  }
+
+  btn.disabled = true;
+  setStatus("Enviando…", "info");
+
+  const payload = {
+    id:            await generarId(),
+    estadoSM:      "Pendiente",
+    ts:            Date.now(),
+    fechaEnvio:    new Date().toISOString(),
+    fechaSugerencia: document.getElementById("f_fecha").value,
+    sugerente,
+    email:         document.getElementById("f_email").value.trim(),
+    area:          document.getElementById("f_area").value.trim(),
+    origen,
+    sugerencia,
+    proceso:       document.getElementById("f_proceso").value.trim(),
+    // Campos para gestión interna (panel)
+    responsable:   "",
+    respuesta:     ""
+  };
+
+  try {
+    const r = await fetch(FB_URL + FB_PATH + "/" + payload.id + ".json", {
+      method: "PUT",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload)
+    });
+    if (!r.ok) throw new Error(r.status);
+
+    // Actualizar timestamp para polling del panel
+    await fetch(FB_URL + "/sugerencias_meta/ts.json", {
+      method: "PUT",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload.ts)
+    });
+
+    const locales = lsGet("sugerencias_local") || {};
+    locales[payload.id] = payload;
+    lsSet("sugerencias_local", locales);
+
+    document.getElementById("formContent").style.display  = "none";
+    document.getElementById("submitArea").style.display   = "none";
+    document.getElementById("successScreen").classList.add("visible");
+    document.getElementById("successId").textContent = payload.id;
+
+  } catch(e) {
+    const locales = lsGet("sugerencias_pendientes") || {};
+    locales[payload.id] = payload;
+    lsSet("sugerencias_pendientes", locales);
+    setStatus("No se pudo conectar. Sugerencia guardada localmente (ID: " + payload.id + ").", "err");
+    btn.disabled = false;
+  }
+}
+
+function autoGrow(el) {
+  el.style.height = "auto";
+  el.style.height = el.scrollHeight + "px";
+}
+document.addEventListener("input", e => {
+  if (e.target.classList.contains("auto-grow")) autoGrow(e.target);
+});
+
+function limpiarFormulario() {
+  document.getElementById("formContent")
+    .querySelectorAll("input, textarea, select")
+    .forEach(el => {
+      if (el.type === "radio" || el.type === "checkbox") el.checked = false;
+      else el.value = "";
+    });
+  document.querySelectorAll(".auto-grow").forEach(el => { el.style.height = "auto"; });
+  document.getElementById("f_origenOtro").style.display = "none";
+  document.getElementById("f_origenOtro").value = "";
+  document.getElementById("btnEnviar").disabled = false;
+  setStatus("", "");
+  document.getElementById("f_fecha").valueAsDate = new Date();
+}
+
+function nuevaSugerencia() {
+  document.getElementById("successScreen").classList.remove("visible");
+  document.getElementById("formContent").style.display = "block";
+  document.getElementById("submitArea").style.display  = "flex";
+  limpiarFormulario();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("f_fecha").valueAsDate = new Date();
+
+  // Deseleccionar radios clickeando de nuevo
+  document.querySelectorAll("input[name='origen']").forEach(inp => {
+    inp.addEventListener("mousedown", () => { inp._wasChecked = inp.checked; });
+    inp.addEventListener("click", () => {
+      if (inp._wasChecked) {
+        inp.checked = false;
+        inp._wasChecked = false;
+        onOrigenChange();
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
