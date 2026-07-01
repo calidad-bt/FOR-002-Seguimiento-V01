@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Formulario de Reclamo – Biotrom</title>
+<title>Formulario de Sugerencias – Biotrom</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -26,7 +26,6 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
   font-family: var(--font);
   font-size: 13px;
@@ -36,9 +35,8 @@ body {
   min-height: 100vh;
   padding: 24px 16px 48px;
 }
-
 .layout {
-  max-width: 720px;
+  max-width: 680px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -53,7 +51,7 @@ body {
 .card:first-child { border-radius: var(--radius) var(--radius) 0 0; }
 .card:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
 .card + .card     { border-top: none; }
-.card-body        { padding: 14px 16px 16px; }
+.card-body        { padding: 14px 16px 20px; }
 
 /* ── DOC HEADER ──────────────────────────────────────────── */
 .doc-header {
@@ -64,237 +62,100 @@ body {
 }
 .doc-logo {
   background: var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   border-right: 1px solid var(--border);
-  font-family: var(--mono);
-  font-size: 18px;
-  font-weight: 600;
-  color: #fff;
-  letter-spacing: .08em;
-  flex-shrink: 0;
+  font-family: var(--mono); font-size: 18px; font-weight: 600;
+  color: #fff; letter-spacing: .08em; flex-shrink: 0;
 }
 .doc-title-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 10px 16px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 10px 16px;
   border-right: 1px solid var(--border);
 }
-.doc-title {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  color: var(--text);
-}
-.doc-subtitle {
-  font-size: 11px;
-  color: var(--text-2);
-  margin-top: 3px;
-}
-/* Meta: 2x2 grid — fila 1: Aprobación + Entrada en vigor / fila 2: Código + Versión */
-.doc-meta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-}
-.meta-cell {
-  padding: 6px 12px;
-  min-width: 110px;
-  border-left: 1px solid var(--border);
-}
-.meta-cell:nth-child(1),
-.meta-cell:nth-child(2) { border-bottom: 1px solid var(--border); }
-.meta-label {
-  display: block;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: .07em;
-  color: var(--text-3);
-  margin-bottom: 2px;
-}
-.meta-value {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text);
-}
+.doc-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text); }
+.doc-subtitle { font-size: 11px; color: var(--text-2); margin-top: 3px; }
+.doc-meta { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+.meta-cell { padding: 6px 12px; min-width: 110px; border-left: 1px solid var(--border); }
+.meta-cell:nth-child(1), .meta-cell:nth-child(2) { border-bottom: 1px solid var(--border); }
+.meta-label { display: block; font-size: 9px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); margin-bottom: 2px; }
+.meta-value { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--text); }
 
-/* ── SECTION TITLE ───────────────────────────────────────── */
+/* ── SEC TITLE ───────────────────────────────────────────── */
 .sec-title {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--accent);
-  padding-bottom: 6px;
-  margin-bottom: 12px;
+  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); padding-bottom: 6px; margin-bottom: 12px;
   border-bottom: 1.5px solid var(--accent-l);
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: flex; align-items: center; gap: 6px;
 }
 .sec-title::before {
-  content: '';
-  display: block;
-  width: 3px;
-  height: 12px;
-  background: var(--accent);
-  border-radius: 2px;
-  flex-shrink: 0;
+  content: ''; display: block; width: 3px; height: 12px;
+  background: var(--accent); border-radius: 2px; flex-shrink: 0;
 }
 
 /* ── FORM FIELDS ─────────────────────────────────────────── */
-.field-grid {
-  display: grid;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.field-grid.cols-2   { grid-template-columns: 1fr 1fr; }
-.field-grid.cols-3   { grid-template-columns: 1fr 1fr 1fr; }
-
 .field-label {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  color: var(--text-2);
-  margin-bottom: 4px;
+  display: block; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text-2); margin-bottom: 4px;
 }
-.req { color: var(--accent); }
-
-.field-input,
+.req { color: var(--accent); font-weight: 700; }
+.field-input {
+  width: 100%; font-family: var(--font); font-size: 13px; color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 7px 10px; background: var(--surface); outline: none;
+  transition: border-color .15s;
+}
+.field-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(14,107,138,.08); }
+.field-input::placeholder { color: var(--text-3); }
+.field-select {
+  width: 100%; font-family: var(--font); font-size: 13px; color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 7px 28px 7px 10px; background: var(--surface); outline: none;
+  cursor: pointer; appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M0 0l4.5 6L9 0z' fill='%235A6470'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  transition: border-color .15s;
+}
+.field-select:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(14,107,138,.08); }
 .field-textarea {
-  width: 100%;
-  font-family: var(--font);
-  font-size: 13px;
-  color: var(--text);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 7px 10px;
-  outline: none;
-  transition: border-color .15s, box-shadow .15s;
+  width: 100%; font-family: var(--font); font-size: 13px; color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 7px 10px; background: var(--surface); outline: none;
+  resize: vertical; min-height: 80px; line-height: 1.5;
+  transition: border-color .15s;
 }
-.field-input:focus,
-.field-textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(14,107,138,.10);
-}
-.field-textarea {
-  resize: none;
-  min-height: 72px;
-  line-height: 1.5;
-  overflow: hidden;
-}
-.field-textarea.auto-grow { overflow: hidden; }
+.field-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(14,107,138,.08); }
+.field-textarea::placeholder { color: var(--text-3); }
 
-/* ── NIVEL BADGE OPTIONS ─────────────────────────────────── */
-.nivel-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 4px;
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.field-grid.cols-1 { grid-template-columns: 1fr; }
+.field-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.field-wrap { margin-bottom: 14px; }
+
+/* ── ORIGEN OPTIONS ──────────────────────────────────────── */
+.origen-options {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;
 }
-.nivel-opt { display: none; }
-.nivel-opt + label {
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 14px;
-  border-radius: 10px;
+.origen-opt { display: none; }
+.origen-opt + label {
+  display: inline-flex; align-items: center;
+  padding: 5px 14px; border-radius: 10px;
   border: 1.5px solid var(--border);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-2);
-  cursor: pointer;
+  font-size: 12px; font-weight: 600;
+  color: var(--text-2); cursor: pointer;
   transition: all .15s;
 }
-.nivel-opt + label:hover { border-color: var(--accent); color: var(--accent); }
-#nivel-grave:checked    + label { background: var(--err-bg);  border-color: var(--err-bd);  color: var(--err-text); }
-#nivel-moderado:checked + label { background: var(--warn-bg); border-color: var(--warn-bd); color: var(--warn-text); }
-#nivel-leve:checked     + label { background: var(--ok-bg);   border-color: var(--ok-bd);   color: var(--ok-text); }
-
-/* ── RIESGO OPTIONS ──────────────────────────────────────── */
-.riesgo-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
-}
-.riesgo-opt { display: none; }
-.riesgo-opt + label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text);
-  cursor: pointer;
-  transition: all .15s;
-  white-space: nowrap;
-}
-.riesgo-opt + label::before {
-  content: '';
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 2px solid var(--border-d);
-  flex-shrink: 0;
-  transition: all .15s;
-}
-.riesgo-opt + label:hover { border-color: var(--accent); }
-.riesgo-opt + label:hover::before { border-color: var(--accent); }
-
-#riesgo-no:checked       + label { border-color: var(--ok-bd);   background: var(--ok-bg);   color: var(--ok-text); }
-#riesgo-no:checked       + label::before { border-color: var(--ok-text); background: var(--ok-text); }
-#riesgo-seguridad:checked + label { border-color: var(--warn-bd); background: var(--warn-bg); color: var(--warn-text); }
-#riesgo-seguridad:checked + label::before { border-color: var(--warn-text); background: var(--warn-text); }
-#riesgo-lesion:checked   + label { border-color: var(--err-bd);  background: var(--err-bg);  color: var(--err-text); }
-#riesgo-lesion:checked   + label::before { border-color: var(--err-text); background: var(--err-text); }
-#riesgo-obito:checked    + label { border-color: #9B1C1C; background: #FEE2E2; color: #7F1D1D; font-weight: 700; }
-#riesgo-obito:checked    + label::before { border-color: #7F1D1D; background: #7F1D1D; }
-
-/* ── RADIO INLINE ────────────────────────────────────────── */
-.radio-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.radio-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-  cursor: pointer;
-}
-.radio-label input {
-  accent-color: var(--accent);
-  width: 15px;
-  height: 15px;
-  cursor: pointer;
-}
+.origen-opt + label:hover { border-color: var(--accent); color: var(--accent); }
+.origen-opt:checked + label { background: var(--accent-l); border-color: var(--accent); color: var(--accent-d); font-weight: 700; }
 
 /* ── DIVIDER ─────────────────────────────────────────────── */
-.divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 
 /* ── SUBMIT ──────────────────────────────────────────────── */
 .submit-area {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-  padding-top: 4px;
+  display: flex; flex-direction: column;
+  align-items: flex-end; gap: 8px; padding-top: 4px;
 }
 .btn-primary {
   height: 38px; padding: 0 20px;
@@ -306,6 +167,13 @@ body {
 }
 .btn-primary:hover { filter: brightness(.93); }
 .btn-primary:disabled { opacity: .5; cursor: not-allowed; filter: none; }
+.btn-light {
+  height: 34px; padding: 0 14px;
+  font-family: var(--font); font-size: 12px; font-weight: 600;
+  background: var(--surface); color: var(--text-2); border: 1px solid var(--border);
+  border-radius: var(--radius); cursor: pointer; margin-top: 8px; transition: filter .1s;
+}
+.btn-light:hover { filter: brightness(.95); }
 
 #statusMsg {
   font-family: var(--font); font-size: 12px;
@@ -316,48 +184,14 @@ body {
 #statusMsg.err  { background: var(--err-bg);  color: var(--err-text); border: 1px solid var(--err-bd); display: block; }
 #statusMsg.info { background: var(--accent-l);color: var(--accent-d); border: 1px solid #B0D8E8;       display: block; }
 
-/* ── SUCCESS ─────────────────────────────────────────────── */
-#successScreen {
-  display: none; flex-direction: column; align-items: center;
-  text-align: center; padding: 48px 24px; gap: 12px;
-}
-#successScreen.visible { display: flex; }
-.success-icon {
-  width: 56px; height: 56px;
-  background: var(--ok-bg); border: 2px solid var(--ok-bd); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; font-size: 24px;
-}
-.success-id { font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--accent); letter-spacing: .05em; }
-.success-text { font-size: 13px; color: var(--text-2); max-width: 360px; }
-.btn-light {
-  height: 34px; padding: 0 14px;
-  font-family: var(--font); font-size: 12px; font-weight: 600;
-  background: var(--surface); color: var(--text-2); border: 1px solid var(--border);
-  border-radius: var(--radius); cursor: pointer; margin-top: 8px; transition: filter .1s;
-}
-.btn-light:hover { filter: brightness(.95); }
-
-.field-grid.cols-fecha  { grid-template-columns: 1fr 1fr 100px; }
-.field-grid.cols-paciente { grid-template-columns: 1fr 1fr; }
-.field-grid.cols-preop  { grid-template-columns: 1fr 1fr; }
-
-.preop-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.preop-wrap .field-input { flex: 1; min-width: 80px; }
-
-.field-grid-mb { margin-bottom: 12px; }
-.field-wrap-mb { margin-bottom: 12px; }
-
 .req-note { font-size: 11px; color: var(--text-3); margin-bottom: 14px; }
 .req-note span { color: var(--accent); font-weight: 700; }
 
-/* ── SUCCESS SCREEN ──────────────────────────────────────── */
+/* ── SUCCESS ─────────────────────────────────────────────── */
 .success-screen {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 52px 24px 56px;
-  gap: 10px;
+  display: none; flex-direction: column;
+  align-items: center; text-align: center;
+  padding: 52px 24px 56px; gap: 10px;
 }
 .success-screen.visible { display: flex; }
 .success-check {
@@ -368,17 +202,9 @@ body {
   font-size: 22px; color: var(--ok-text); font-weight: 700;
   margin-bottom: 4px;
 }
-.success-id {
-  font-family: var(--mono); font-size: 22px; font-weight: 600;
-  color: var(--accent); letter-spacing: .05em;
-}
-.success-label {
-  font-size: 13px; font-weight: 600; color: var(--text);
-}
-.success-sub {
-  font-size: 12px; color: var(--text-2); max-width: 340px; line-height: 1.6;
-  margin-top: 2px;
-}
+.success-id { font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--accent); letter-spacing: .05em; }
+.success-label { font-size: 13px; font-weight: 600; color: var(--text); }
+.success-sub { font-size: 12px; color: var(--text-2); max-width: 340px; line-height: 1.6; margin-top: 2px; }
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 600px) {
@@ -386,54 +212,11 @@ body {
   .doc-header { grid-template-columns: 56px 1fr; }
   .doc-meta { display: none; }
   .doc-title-wrap { border-right: none; }
-  .field-grid.cols-2,
-  .field-grid.cols-3 { grid-template-columns: 1fr; }
+  .field-grid { grid-template-columns: 1fr; }
   .submit-area { flex-direction: column; align-items: stretch; }
   .btn-primary { justify-content: center; }
 }
 
-/* ── FOTOS ───────────────────────────────────────────────── */
-.foto-drop {
-  border: 1.5px dashed var(--border-d);
-  border-radius: var(--radius);
-  padding: 20px 16px;
-  text-align: center;
-  color: var(--text-3);
-  font-size: 12px;
-  cursor: pointer;
-  transition: background .15s, border-color .15s;
-  background: var(--bg);
-}
-.foto-drop:hover, .foto-drop.drag-over {
-  background: var(--accent-l);
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.foto-drop input[type="file"] { display: none; }
-.foto-drop-icon { font-size: 22px; margin-bottom: 4px; color: var(--text-3); }
-.foto-grid {
-  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;
-}
-.foto-thumb {
-  position: relative; width: 90px; height: 90px;
-  border: 1px solid var(--border); border-radius: var(--radius);
-  overflow: hidden; background: var(--bg);
-}
-.foto-thumb img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-}
-.foto-thumb-del {
-  position: absolute; top: 3px; right: 3px;
-  width: 18px; height: 18px;
-  background: rgba(183,32,32,.85); color: white;
-  border: none; border-radius: 50%; cursor: pointer;
-  font-size: 11px; font-weight: 700; line-height: 18px; text-align: center;
-  display: flex; align-items: center; justify-content: center;
-}
-.foto-count {
-  font-size: 11px; color: var(--text-3); margin-top: 4px;
-  font-family: var(--mono);
-}
 @media print {
   @page { size: A4; margin: 20mm 18mm; }
   body { background: white; padding: 0; }
@@ -447,14 +230,13 @@ body {
 <body>
 
 <div class="layout">
-
-  <div class="card" id="formCard">
+  <div class="card">
 
     <!-- HEADER DOCUMENTAL -->
     <div class="doc-header">
       <div class="doc-logo">BT</div>
       <div class="doc-title-wrap">
-        <div class="doc-title">Formulario de Reclamo de Clientes</div>
+        <div class="doc-title">Formulario de Sugerencias de Mejora</div>
         <div class="doc-subtitle">Sistema de Gestión de Calidad — Biotrom</div>
       </div>
       <div class="doc-meta">
@@ -468,7 +250,7 @@ body {
         </div>
         <div class="meta-cell">
           <span class="meta-label">Código</span>
-          <span class="meta-value">FOR-001</span>
+          <span class="meta-value">FOR-002</span>
         </div>
         <div class="meta-cell">
           <span class="meta-label">Versión</span>
@@ -481,173 +263,89 @@ body {
     <div class="card-body" id="formContent">
       <p class="req-note">Los campos marcados con <span>*</span> son obligatorios.</p>
 
-      <!-- 1. DATOS DEL RECLAMO -->
-      <div class="sec-title">1. Datos del Reclamo</div>
+      <!-- 1. DATOS DEL SUGERENTE -->
+      <div class="sec-title">1. Datos de quien sugiere</div>
 
-      <div class="field-grid cols-fecha">
+      <div class="field-grid">
         <div>
-          <label class="field-label">Fecha del reclamo <span class="req">*</span></label>
-          <input class="field-input" type="date" id="f_fecha" required>
-        </div>
-        <div>
-          <label class="field-label">Código de producto</label>
-          <input class="field-input" type="text" id="f_codProd" placeholder="Ej: IMP-001">
-        </div>
-        <div>
-          <label class="field-label">Lote</label>
-          <input class="field-input" type="text" id="f_lote" placeholder="N.º lote">
-        </div>
-      </div>
-
-      <div class="field-grid field-grid-mb">
-        <div>
-          <label class="field-label">Producto / instrumental <span class="req">*</span></label>
-          <input class="field-input" type="text" id="f_producto" placeholder="Descripción del producto" required>
-        </div>
-      </div>
-
-      <div class="field-grid cols-3">
-        <div>
-          <label class="field-label">Apellido y nombre del reclamante <span class="req">*</span></label>
-          <input class="field-input" type="text" id="f_reclamante" placeholder="Apellido y nombre" required>
-        </div>
-        <div>
-          <label class="field-label">Área / Institución</label>
-          <input class="field-input" type="text" id="f_area" placeholder="Área o institución">
+          <label class="field-label">Apellido y nombre <span class="req">*</span></label>
+          <input class="field-input" type="text" id="f_sugerente" placeholder="Apellido y nombre" required>
         </div>
         <div>
           <label class="field-label">Email o telefono de contacto</label>
           <input class="field-input" type="email" id="f_email" placeholder="Mail o número de contacto">
         </div>
-</div>
+      </div>
 
-
-
+      <div class="field-grid">
+        <div>
+          <label class="field-label">Área / Institución</label>
+          <input class="field-input" type="text" id="f_area" placeholder="Sector o institución">
+        </div>
+        <div>
+          <label class="field-label">Fecha</label>
+          <input class="field-input" type="date" id="f_fecha" style="max-width:220px;">
+        </div>
+      </div>
 
       <hr class="divider">
 
-      <!-- 2. DATOS DEL PACIENTE -->
-      <div class="sec-title">2. Datos del Paciente</div>
+      <!-- 2. ORIGEN DE LA SUGERENCIA -->
+      <div class="sec-title">2. Origen de la sugerencia</div>
 
-      <div class="field-grid cols-paciente">
-        <div>
-          <label class="field-label">Apellido y nombre del paciente <span class="req">*</span></label>
-          <input class="field-input" type="text" id="f_paciente" placeholder="Apellido y nombre" required>
+      <div class="field-wrap">
+        <label class="field-label">¿Desde dónde viene esta sugerencia? <span class="req">*</span></label>
+        <div class="origen-options" id="origenOptions">
+          <input class="origen-opt" type="radio" name="origen" id="origen-cirugia"  value="Cirugía"   onchange="onOrigenChange()">
+          <label for="origen-cirugia">Cirugía</label>
+          <input class="origen-opt" type="radio" name="origen" id="origen-ventas"   value="Ventas"    onchange="onOrigenChange()">
+          <label for="origen-ventas">Ventas</label>
+          <input class="origen-opt" type="radio" name="origen" id="origen-deposito" value="Depósito"  onchange="onOrigenChange()">
+          <label for="origen-deposito">Depósito</label>
+          <input class="origen-opt" type="radio" name="origen" id="origen-calidad"  value="Calidad"   onchange="onOrigenChange()">
+          <label for="origen-calidad">Calidad</label>
+          <input class="origen-opt" type="radio" name="origen" id="origen-otro"     value="Otro"      onchange="onOrigenChange()">
+          <label for="origen-otro">Otro</label>
         </div>
+        <input class="field-input" type="text" id="f_origenOtro"
+          placeholder="Especificá el origen…"
+          style="display:none; margin-top:8px; max-width:320px;">
       </div>
-              <!-- RIESGO EN SEGURIDAD -->
-      <div class="field-wrap-mb">
-        <label class="field-label">Tipo de situación / riesgo <span class="req">*</span></label>
-        <div class="riesgo-options">
-          <input class="riesgo-opt" type="radio" name="riesgoSeg" id="riesgo-no"        value="Sin riesgo">
-          <label for="riesgo-no">Sin riesgo para el paciente</label>
-
-          <input class="riesgo-opt" type="radio" name="riesgoSeg" id="riesgo-seguridad" value="Riesgo en la seguridad">
-          <label for="riesgo-seguridad">Riesgo en la seguridad del paciente</label>
-
-          <input class="riesgo-opt" type="radio" name="riesgoSeg" id="riesgo-lesion"    value="Lesión">
-          <label for="riesgo-lesion">Lesión</label>
-
-          <input class="riesgo-opt" type="radio" name="riesgoSeg" id="riesgo-obito"     value="Óbito">
-          <label for="riesgo-obito">Óbito</label>
-        </div>
-      </div>
-      
 
       <hr class="divider">
 
-      <!-- 3. DATOS DEL PROFESIONAL Y LA CIRUGÍA -->
-      <div class="sec-title">3. Datos del Profesional y de la Cirugía</div>
+      <!-- 3. LA SUGERENCIA -->
+      <div class="sec-title">3. Sugerencia de mejora</div>
 
-      <div class="field-grid cols-3">
-        <div>
-          <label class="field-label">Apellido y nombre del cirujano <span class="req">*</span></label>
-          <input class="field-input" type="text" id="f_cirujano" placeholder="Apellido y nombre" required>
-        </div>
-        <div>
-          <label class="field-label">Institución quirúrgica</label>
-          <input class="field-input" type="text" id="f_institucion" placeholder="Hospital / Clínica">
-        </div>    
-    <div>
-          <label class="field-label">Fecha de la operación <span class="req">*</span></label>
-          <input class="field-input" type="date" id="f_fechaOp" required>
-        </div>
-       </div>
-
-      
-      <hr class="divider">
-
-      <!-- 4. DESCRIPCIÓN DEL RECLAMO -->
-      <div class="sec-title">4. Descripción del Reclamo</div>
-<!-- TÉCNICA QUIRÚRGICA -->
-      <div class="field-grid cols-preop field-grid-mb">
-        <div>
-          <label class="field-label">¿Se respetaron todos los pasos de la técnica? <span class="req">*</span></label>
-          <div class="preop-wrap">
-            <div class="radio-row">
-              <label class="radio-label"><input type="radio" name="tecnica" id="tecnica-si" value="Si" onchange="toggleTecnicaMotivo()"> Sí</label>
-              <label class="radio-label"><input type="radio" name="tecnica" id="tecnica-no" value="No" onchange="toggleTecnicaMotivo()"> No</label>
-            </div>
-            <input class="field-input" type="text" id="f_tecnicaMotivo" placeholder="¿Por qué no?" style="display:none;flex:1;">
-          </div>
-        </div>
-      </div>
-
-      <div class="field-wrap-mb">
-        <label class="field-label">Descripción detallada <span class="req">*</span></label>
-        <textarea class="field-textarea auto-grow" id="f_descripcion" rows="3" placeholder="Describir detalladamente el reclamo recibido." required></textarea>
-
-
-<div class="field-wrap-mb">
-        <label class="field-label">Nivel del reclamo <span class="req">*</span></label>
-        <div class="nivel-options">
-          <input class="nivel-opt" type="radio" name="nivel" id="nivel-grave"    value="Grave">
-          <label for="nivel-grave">Grave</label>
-          <input class="nivel-opt" type="radio" name="nivel" id="nivel-moderado" value="Moderado">
-          <label for="nivel-moderado">Moderado</label>
-          <input class="nivel-opt" type="radio" name="nivel" id="nivel-leve"     value="Leve">
-          <label for="nivel-leve">Leve</label>
-        </div>
-      </div>
-
-      <!-- FOTOS -->
-      <div class="field-wrap-mb">
-        <label class="field-label">Fotos de evidencia</label>
-        <div class="foto-drop" id="fotoDrop" onclick="document.getElementById('fotoInput').click()"
-          ondragover="fotoDragOver(event)" ondragleave="fotoDragLeave(event)" ondrop="fotoDrop(event)">
-          <input type="file" id="fotoInput" accept="image/*" multiple onchange="fotoAgregar(this.files)">
-          <div class="foto-drop-icon">⊕</div>
-          <div>Hacé clic o arrastrá fotos acá</div>
-          <div style="font-size:11px;margin-top:2px;">JPG, PNG, WEBP · Máx. 3 fotos</div>
-        </div>
-        <div class="foto-grid" id="fotoGrid"></div>
-        <div class="foto-count" id="fotoCount"></div>
+      <div class="field-wrap">
+        <label class="field-label">Descripción de la sugerencia <span class="req">*</span></label>
+        <textarea class="field-textarea auto-grow" id="f_sugerencia" rows="4"
+          placeholder="Describí tu sugerencia de mejora con el mayor detalle posible. ¿Qué mejoraría? ¿Por qué lo considerás importante? ¿Cómo lo implementarías?" required></textarea>
       </div>
 
       <!-- SUBMIT -->
       <hr class="divider">
       <div class="submit-area" id="submitArea">
         <span id="statusMsg"></span>
-        <button class="btn-primary" id="btnEnviar" onclick="enviarReclamo()">Enviar reclamo</button>
+        <button class="btn-primary" id="btnEnviar" onclick="enviarSugerencia()">Enviar sugerencia</button>
       </div>
-    </div>
+    </div><!-- /formContent -->
 
-    <!-- SUCCESS (estado interno, misma card) -->
+    <!-- SUCCESS -->
     <div class="success-screen" id="successScreen">
       <div class="success-check">✓</div>
-      <div class="success-id" id="successId">RC-0001</div>
-      <div class="success-label">Reclamo registrado correctamente</div>
-      <p class="success-sub">Guardá este número de referencia para hacer seguimiento con el equipo de Calidad.</p>
-      <button class="btn-light" onclick="nuevoReclamo()" style="margin-top:16px;">Ingresar otro reclamo</button>
+      <div class="success-id" id="successId">SM-0001</div>
+      <div class="success-label">Sugerencia registrada correctamente</div>
+      <p class="success-sub">Guardá este número de referencia. El equipo de Calidad revisará tu sugerencia y te informará el resultado.</p>
+      <button class="btn-light" onclick="nuevaSugerencia()">Ingresar otra sugerencia</button>
     </div>
 
   </div><!-- /card -->
-
 </div><!-- /layout -->
 
 <script>
 const FB_URL  = "https://sgc-bt-default-rtdb.firebaseio.com";
-const FB_PATH = "/reclamos";
+const FB_PATH = "/sugerencias";
 
 function lsGet(k){ try{ return JSON.parse(localStorage.getItem(k)||"null"); }catch(e){ return null; } }
 function lsSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
@@ -665,208 +363,104 @@ function getRadio(name) {
 
 async function generarId() {
   try {
-    const res  = await fetch(FB_URL + "/reclamos_counter.json");
+    const res  = await fetch(FB_URL + "/sugerencias_counter.json");
     const val  = await res.json();
     const next = (val || 0) + 1;
-    await fetch(FB_URL + "/reclamos_counter.json", {
+    await fetch(FB_URL + "/sugerencias_counter.json", {
       method: "PUT",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify(next)
     });
-    return "RC-" + String(next).padStart(4, "0");
+    return "SM-" + String(next).padStart(4, "0");
   } catch(e) {
-    return "RC-" + Date.now().toString().slice(-6);
+    return "SM-" + Date.now().toString().slice(-6);
   }
 }
 
-/* ── FOTOS ───────────────────────────────────────────────── */
-let fotosBase64 = []; // [{name, dataUrl}]
-const MAX_FOTOS = 3;
-const MAX_PX    = 1200; // max dimensión
-const MAX_KB    = 400;  // calidad target kb
-
-function fotoComprimir(file) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        let w = img.width, h = img.height;
-        if (w > MAX_PX || h > MAX_PX) {
-          if (w > h) { h = Math.round(h * MAX_PX / w); w = MAX_PX; }
-          else       { w = Math.round(w * MAX_PX / h); h = MAX_PX; }
-        }
-        const canvas = document.createElement("canvas");
-        canvas.width = w; canvas.height = h;
-        canvas.getContext("2d").drawImage(img, 0, 0, w, h);
-        // Reducir calidad hasta target kb
-        let quality = 0.92;
-        let dataUrl = canvas.toDataURL("image/jpeg", quality);
-        while (dataUrl.length > MAX_KB * 1024 * 1.37 && quality > 0.4) {
-          quality -= 0.08;
-          dataUrl = canvas.toDataURL("image/jpeg", quality);
-        }
-        resolve({ name: file.name, dataUrl });
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
+function onOrigenChange() {
+  const val = getRadio("origen");
+  const inp = document.getElementById("f_origenOtro");
+  inp.style.display = val === "Otro" ? "" : "none";
+  if (val !== "Otro") inp.value = "";
 }
 
-async function fotoAgregar(files) {
-  const disponible = MAX_FOTOS - fotosBase64.length;
-  if (disponible <= 0) { alert("Máximo 3 fotos por reclamo."); return; }
-  const lista = Array.from(files).slice(0, disponible);
-  for (const f of lista) {
-    if (!f.type.startsWith("image/")) continue;
-    const foto = await fotoComprimir(f);
-    fotosBase64.push(foto);
+function getOrigenFinal() {
+  const val = getRadio("origen");
+  if (val === "Otro") {
+    const txt = document.getElementById("f_origenOtro").value.trim();
+    return txt ? "Otro: " + txt : "Otro";
   }
-  document.getElementById("fotoInput").value = "";
-  renderFotos();
+  return val;
 }
 
-function renderFotos() {
-  const grid = document.getElementById("fotoGrid");
-  const count = document.getElementById("fotoCount");
-  grid.innerHTML = fotosBase64.map((f, i) => `
-    <div class="foto-thumb">
-      <img src="${f.dataUrl}" alt="${f.name}">
-      <button class="foto-thumb-del" onclick="fotoEliminar(${i})" title="Eliminar">×</button>
-    </div>`).join("");
-  count.textContent = fotosBase64.length > 0
-    ? fotosBase64.length + " foto" + (fotosBase64.length > 1 ? "s" : "") + " adjunta" + (fotosBase64.length > 1 ? "s" : "")
-    : "";
-  const drop = document.getElementById("fotoDrop");
-  drop.style.display = fotosBase64.length >= MAX_FOTOS ? "none" : "";
-}
-
-function fotoEliminar(i) {
-  fotosBase64.splice(i, 1);
-  renderFotos();
-}
-
-function fotoDragOver(e) {
-  e.preventDefault();
-  document.getElementById("fotoDrop").classList.add("drag-over");
-}
-function fotoDragLeave(e) {
-  document.getElementById("fotoDrop").classList.remove("drag-over");
-}
-function fotoDrop(e) {
-  e.preventDefault();
-  document.getElementById("fotoDrop").classList.remove("drag-over");
-  fotoAgregar(e.dataTransfer.files);
-}
-
-async function enviarReclamo() {
+async function enviarSugerencia() {
   const btn = document.getElementById("btnEnviar");
 
-  const fecha       = document.getElementById("f_fecha").value;
-  const producto    = document.getElementById("f_producto").value.trim();
-  const reclamante  = document.getElementById("f_reclamante").value.trim();
-  const paciente    = document.getElementById("f_paciente").value.trim();
-  const cirujano    = document.getElementById("f_cirujano").value.trim();
-  const fechaOp     = document.getElementById("f_fechaOp").value;
-  const descripcion = document.getElementById("f_descripcion").value.trim();
-  const nivel       = getRadio("nivel");
-  const riesgo      = getRadio("riesgoSeg");
-  const tecnica     = getRadio("tecnica");
+  const sugerente  = document.getElementById("f_sugerente").value.trim();
+  const sugerencia = document.getElementById("f_sugerencia").value.trim();
+  const origen     = getOrigenFinal();
+  const origenRaw  = getRadio("origen");
 
-  if (!fecha || !producto || !reclamante || !paciente || !cirujano || !fechaOp || !descripcion || !nivel || !riesgo || !tecnica) {
-    // Armar lista específica de lo que falta
+  if (!sugerente || !sugerencia || !origenRaw) {
     const faltantes = [];
-    if (!fecha)       faltantes.push("Fecha del reclamo");
-    if (!producto)    faltantes.push("Producto / Instrumental");
-    if (!reclamante)  faltantes.push("Nombre del reclamante");
-    if (!paciente)    faltantes.push("Nombre del paciente");
-    if (!cirujano)    faltantes.push("Cirujano interviniente");
-    if (!fechaOp)     faltantes.push("Fecha de la operación");
-    if (!descripcion) faltantes.push("Descripción detallada");
-    if (!nivel)       faltantes.push("Nivel del reclamo");
-    if (!riesgo)      faltantes.push("Tipo de situación / riesgo");
-    if (!tecnica)     faltantes.push("¿Se respetaron los pasos de la técnica?");
+    if (!sugerente)  faltantes.push("Apellido y nombre");
+    if (!origenRaw)  faltantes.push("Origen de la sugerencia");
+    if (!sugerencia) faltantes.push("Descripción de la sugerencia");
     setStatus("Faltá completar: " + faltantes.join(" · "), "err");
-    // Scroll al primer campo vacío
-    const primerVacio = [
-      !fecha && "f_fecha", !producto && "f_producto", !reclamante && "f_reclamante",
-      !paciente && "f_paciente", !cirujano && "f_cirujano", !fechaOp && "f_fechaOp",
-      !descripcion && "f_descripcion"
-    ].find(Boolean);
+    const primerVacio = !sugerente ? "f_sugerente" : !sugerencia ? "f_sugerencia" : null;
     if (primerVacio) document.getElementById(primerVacio)?.scrollIntoView({ behavior:"smooth", block:"center" });
     return;
   }
 
   btn.disabled = true;
-  setStatus("Enviando...", "info");
+  setStatus("Enviando…", "info");
 
-  const reclamo = {
-    id:           await generarId(),
-    estado:       "Pendiente",
-    ts:           Date.now(),
-    fechaEnvio:   new Date().toISOString(),
-    fechaReclamo: fecha,
-    codProducto:  document.getElementById("f_codProd").value.trim(),
-    lote:         document.getElementById("f_lote").value.trim(),
-    producto,
-    reclamante,
-    area:         document.getElementById("f_area").value.trim(),
-    email:        document.getElementById("f_email").value.trim(),
-    telefono:     document.getElementById("f_telefono").value.trim(),
-    paciente,
-    edad:         document.getElementById("f_edad").value.trim(),
-    peso:         document.getElementById("f_peso").value.trim(),
-    nivel,
-    cirujano,
-    institucion:  document.getElementById("f_institucion").value.trim(),
-    fechaOp,
-    descripcion,
-    riesgoSeg:    riesgo,
-    tecnica,
-    tecnicaMotivo: tecnica === "No" ? (document.getElementById("f_tecnicaMotivo")?.value?.trim() || "") : "",
-    fotos:        fotosBase64.map(f => f.dataUrl),
-    // Campos para el panel
-    investigar:        "",
-    motivoNoInvestiga: "",
-    acciones:          [],
-    cierreResponsable: "",
-    cierreFecha:       "",
-    notas:             ""
+  const payload = {
+    id:            await generarId(),
+    estadoSM:      "Pendiente",
+    ts:            Date.now(),
+    fechaEnvio:    new Date().toISOString(),
+    fechaSugerencia: document.getElementById("f_fecha").value,
+    sugerente,
+    email:         document.getElementById("f_email").value.trim(),
+    area:          document.getElementById("f_area").value.trim(),
+    origen,
+    sugerencia,
+    // Campos para gestión interna (panel)
+    responsable:   "",
+    respuesta:     ""
   };
 
   try {
-    const r = await fetch(FB_URL + FB_PATH + "/" + reclamo.id + ".json", {
+    const r = await fetch(FB_URL + FB_PATH + "/" + payload.id + ".json", {
       method: "PUT",
       headers: {"Content-Type":"application/json"},
-      body: JSON.stringify(reclamo)
+      body: JSON.stringify(payload)
     });
     if (!r.ok) throw new Error(r.status);
 
-    const locales = lsGet("reclamos_local") || {};
-    locales[reclamo.id] = reclamo;
-    lsSet("reclamos_local", locales);
+    // Actualizar timestamp para polling del panel
+    await fetch(FB_URL + "/sugerencias_meta/ts.json", {
+      method: "PUT",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload.ts)
+    });
 
-    document.getElementById("formContent").style.display = "none";
-    document.getElementById("submitArea").style.display  = "none";
+    const locales = lsGet("sugerencias_local") || {};
+    locales[payload.id] = payload;
+    lsSet("sugerencias_local", locales);
+
+    document.getElementById("formContent").style.display  = "none";
+    document.getElementById("submitArea").style.display   = "none";
     document.getElementById("successScreen").classList.add("visible");
-    document.getElementById("successId").textContent = reclamo.id;
+    document.getElementById("successId").textContent = payload.id;
 
   } catch(e) {
-    const locales = lsGet("reclamos_pendientes") || {};
-    locales[reclamo.id] = reclamo;
-    lsSet("reclamos_pendientes", locales);
-    setStatus("No se pudo conectar. Reclamo guardado localmente (ID: " + reclamo.id + ").", "err");
+    const locales = lsGet("sugerencias_pendientes") || {};
+    locales[payload.id] = payload;
+    lsSet("sugerencias_pendientes", locales);
+    setStatus("No se pudo conectar. Sugerencia guardada localmente (ID: " + payload.id + ").", "err");
     btn.disabled = false;
-  }
-}
-
-function toggleTecnicaMotivo() {
-  const val = getRadio("tecnica");
-  const inp = document.getElementById("f_tecnicaMotivo");
-  if (inp) {
-    inp.style.display = val === "No" ? "" : "none";
-    if (val !== "No") inp.value = "";
   }
 }
 
@@ -880,52 +474,38 @@ document.addEventListener("input", e => {
 
 function limpiarFormulario() {
   document.getElementById("formContent")
-    .querySelectorAll("input, textarea")
+    .querySelectorAll("input, textarea, select")
     .forEach(el => {
       if (el.type === "radio" || el.type === "checkbox") el.checked = false;
       else el.value = "";
     });
-  // Reset auto-grow textareas
-  document.querySelectorAll(".auto-grow").forEach(el => {
-    el.style.height = "auto";
-  });
+  document.querySelectorAll(".auto-grow").forEach(el => { el.style.height = "auto"; });
+  document.getElementById("f_origenOtro").style.display = "none";
+  document.getElementById("f_origenOtro").value = "";
   document.getElementById("btnEnviar").disabled = false;
   setStatus("", "");
   document.getElementById("f_fecha").valueAsDate = new Date();
 }
 
-function nuevoReclamo() {
+function nuevaSugerencia() {
   document.getElementById("successScreen").classList.remove("visible");
   document.getElementById("formContent").style.display = "block";
   document.getElementById("submitArea").style.display  = "flex";
-  fotosBase64 = [];
-  renderFotos();
   limpiarFormulario();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("f_fecha").valueAsDate = new Date();
 
-  // ── Permitir deseleccionar radios clickeando de nuevo ──────
-  // Para los grupos de tipo badge/pill (nivel, riesgoSeg) el click
-  // ya llega al input hidden; para preop/postop/tecnica el click
-  // llega al label que wrappea el input.
-  // Estrategia: en mousedown guardamos si ya estaba checked;
-  // en change, si estaba checked lo deseleccionamos.
-  const deselGroups = ["nivel","riesgoSeg","tecnica"];
-  deselGroups.forEach(name => {
-    document.querySelectorAll(`input[name="${name}"]`).forEach(inp => {
-      inp.addEventListener("mousedown", () => {
-        inp._wasChecked = inp.checked;
-      });
-      inp.addEventListener("click", () => {
-        if (inp._wasChecked) {
-          inp.checked = false;
-          inp._wasChecked = false;
-          // Disparar efectos colaterales
-          if (name === "tecnica") toggleTecnicaMotivo();
-        }
-      });
+  // Deseleccionar radios clickeando de nuevo
+  document.querySelectorAll("input[name='origen']").forEach(inp => {
+    inp.addEventListener("mousedown", () => { inp._wasChecked = inp.checked; });
+    inp.addEventListener("click", () => {
+      if (inp._wasChecked) {
+        inp.checked = false;
+        inp._wasChecked = false;
+        onOrigenChange();
+      }
     });
   });
 });
