@@ -363,17 +363,18 @@ function getRadio(name) {
 
 async function generarId() {
   try {
-    const res  = await fetch(FB_URL + "/sugerencias_counter.json");
-    const val  = await res.json();
-    const next = (val || 0) + 1;
-    await fetch(FB_URL + "/sugerencias_counter.json", {
-      method: "PUT",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify(next)
-    });
-    return "SM-" + String(next).padStart(4, "0");
+    const res  = await fetch(FB_URL + "/sugerencias.json?shallow=true");
+    const keys = await res.json();
+    let maxNum = 0;
+    if (keys && typeof keys === "object") {
+      Object.keys(keys).forEach(k => {
+        const m = k.match(/SM-(\d+)$/);
+        if (m) maxNum = Math.max(maxNum, parseInt(m[1], 10));
+      });
+    }
+    return "SM-" + String(maxNum + 1).padStart(4, "0");
   } catch(e) {
-    return "SM-" + Date.now().toString().slice(-6);
+    return "SM-" + Date.now().toString().slice(-4);
   }
 }
 
@@ -423,6 +424,7 @@ async function enviarSugerencia() {
     fechaSugerencia: document.getElementById("f_fecha").value,
     sugerente,
     email:         document.getElementById("f_email").value.trim(),
+    telefono:      document.getElementById("f_telefono").value.trim(),
     area:          document.getElementById("f_area").value.trim(),
     origen,
     sugerencia,
